@@ -1,0 +1,4 @@
+create project: nest new
+start project: nest start
+run project in development mode: npm run start:dev 
+create controller: nest g controller coffees --no-spec
