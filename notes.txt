@@ -7,3 +7,5 @@ create module: nest g module coffees
 
 validate dto: npm install class-validator class-transformer
 partial extend dto (like partialtype to add @IsOptional() with extension): npm i @nestjs/mapped-types
+
+install typeorm and postgres: npm i typeorm @nestjs/typeorm pg
