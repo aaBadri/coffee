@@ -1,4 +1,6 @@
 create project: nest new
 start project: nest start
 run project in development mode: npm run start:dev 
-create controller: nest g controller coffees --no-spec
+create controller: cd src & nest g controller coffees
+create service: cd src & nest g s coffees
+create module: nest g module coffees
