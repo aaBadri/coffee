@@ -6,4 +6,6 @@
    1. npm i -g @nestjs/cli
 3. create project
    1. nest new
-   2. 
+4. run project:
+   1. npm run start
+   2. npm run start:dev
