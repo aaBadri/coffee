@@ -24,16 +24,20 @@ export class CoffeesController {
 
   @Get(':id')
   findOne(@Param('id') id: number) {
-    return this.coffeesService.findOne(id);
+    // transform: true in main.ts file converts this line from string to number if we set type of id argument to number
+    console.log(typeof id);
+    return this.coffeesService.findOne('' + id);
   }
 
   @Post()
   create(@Body() createCoffeeDto: CreateCoffeeDto) {
+    // transform: true in main.ts file makes this line true
+    console.log(createCoffeeDto instanceof CreateCoffeeDto);
     return this.coffeesService.create(createCoffeeDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateCoffeeDto: UpdateCoffeeDto) {
+  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
     return this.coffeesService.update(id, updateCoffeeDto);
   }
 
