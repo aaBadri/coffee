@@ -58,3 +58,10 @@ a simple annotation in your DTO.
 ## install
 validate dto: npm install class-validator class-transformer
 partial extend dto (like partialtype to add @IsOptional() with extension): npm i @nestjs/mapped-types
+
+It can filter out properties that should NOT be received by a method handler. via "whitelisting". In our main.ts file...
+Let's pass in an object inside of ValidationPipe with the key/values whitelist: true inside of it.
+In addition to this, the ValidationPipe also gives us the option to STOP a request
+from being processed if any non-white listed properties are present. Throwing an error instead.
+Let's head back to our main.ts file and add the forbidNonWhitelisted option and set it to
+true. This property, in combination with whitelist, will enable this functionality right away.

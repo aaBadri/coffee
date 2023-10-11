@@ -29,6 +29,7 @@ export class CoffeesService {
   }
   create(createCoffeeDto: any) {
     this.coffees.push(createCoffeeDto);
+    return createCoffeeDto;
   }
   update(id: number, updateCoffeeDto: any) {
     const item = this.findOne(id);
