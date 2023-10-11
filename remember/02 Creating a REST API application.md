@@ -55,3 +55,6 @@ You can specify these rules by using
 a simple annotation in your DTO.
 
 
+## install
+validate dto: npm install class-validator class-transformer
+partial extend dto (like partialtype to add @IsOptional() with extension): npm i @nestjs/mapped-types
