@@ -59,9 +59,29 @@ a simple annotation in your DTO.
 validate dto: npm install class-validator class-transformer
 partial extend dto (like partialtype to add @IsOptional() with extension): npm i @nestjs/mapped-types
 
+## 18
 It can filter out properties that should NOT be received by a method handler. via "whitelisting". In our main.ts file...
 Let's pass in an object inside of ValidationPipe with the key/values whitelist: true inside of it.
 In addition to this, the ValidationPipe also gives us the option to STOP a request
 from being processed if any non-white listed properties are present. Throwing an error instead.
 Let's head back to our main.ts file and add the forbidNonWhitelisted option and set it to
 true. This property, in combination with whitelist, will enable this functionality right away.
+
+
+## 19
+it turns out our payload may
+be in the "shape" of CreateCoffeeDto,
+but it's not actually an *instance*
+of our CreateCoffeeDto class just yet.
+Lucky for us, ValidationPipe can help us
+transform this object into exactly what we're
+expecting.
+To enable this behavior globally.
+Let's head over to our main.ts file,
+and set the transform option to
+"true", on our global ValidationPipe.
+
+
+This auto transformation feature also performs primitive Type conversions for things such as booleans and numbers.
+this feature of validation is incredibly helpful.
+It not only saves us time, but also helps us be more aware of what types we're dealing with... whether they are primitive, like Boolean,Number or even our custom DTO's.
