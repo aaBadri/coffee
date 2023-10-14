@@ -7,11 +7,13 @@ export class CoffeesService {
     {
       id: 1,
       name: 'coffee',
+      brand: 'brand1',
       flavors: ['chocolate', 'vanilla'],
     },
     {
       id: 2,
       name: 'coffee2',
+      brand: 'brand2',
       flavors: ['chocolate2', 'vanilla2'],
     },
   ];
