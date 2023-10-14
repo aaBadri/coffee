@@ -23,16 +23,16 @@ export class CoffeesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id: string) {
     // transform: true in main.ts file converts this line from string to number if we set type of id argument to number
-    console.log(typeof id);
+    // console.log(typeof id);
     return this.coffeesService.findOne('' + id);
   }
 
   @Post()
   create(@Body() createCoffeeDto: CreateCoffeeDto) {
     // transform: true in main.ts file makes this line true
-    console.log(createCoffeeDto instanceof CreateCoffeeDto);
+    // console.log(createCoffeeDto instanceof CreateCoffeeDto);
     return this.coffeesService.create(createCoffeeDto);
   }
 
@@ -42,7 +42,7 @@ export class CoffeesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  remove(@Param('id') id: string) {
     return this.coffeesService.remove(id);
   }
 }
