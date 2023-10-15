@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  // Index,
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
@@ -12,6 +13,7 @@ export class Coffee {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  // @Index()
   @Column()
   name: string;
 
