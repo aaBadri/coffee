@@ -16,7 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       database: 'coffee',
       autoLoadEntities: true,
       // turn off in production
-      synchronize: true,
+      // synchronize: true,
     }),
   ],
   controllers: [AppController],
