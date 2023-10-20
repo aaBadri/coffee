@@ -9,6 +9,20 @@ import appConfig from './config/app.config';
 
 @Module({
   imports: [
+    // if this is synchronous we do not have values for config values so we should run async
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: 'postgres',
+        host: process.env.localhost,
+        port: +process.env.DATABASE_PORT,
+        username: process.env.DATABASE_USERNAME,
+        password: process.env.DATABASE_PASSWORD,
+        database: process.env.DATABASE_NAME,
+        autoLoadEntities: true,
+        // turn off in production
+        // synchronize: true,
+      }),
+    }),
     ConfigModule.forRoot({
       load: [appConfig],
       validationSchema: Joi.object({
@@ -21,17 +35,6 @@ import appConfig from './config/app.config';
       // ignoreEnvFile: true,
     }),
     CoffeesModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.localhost,
-      port: +process.env.DATABASE_PORT,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      autoLoadEntities: true,
-      // turn off in production
-      // synchronize: true,
-    }),
   ],
   controllers: [AppController],
   providers: [AppService],
