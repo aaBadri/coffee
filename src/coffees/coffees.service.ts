@@ -17,11 +17,14 @@ export class CoffeesService {
     private readonly flavorRepository: Repository<Flavor>,
     private readonly configService: ConfigService,
   ) {
-    const databaseHost = this.configService.get<string>(
-      'DATABASE_HOST',
-      'localhost',
+    const databaseConfig = this.configService.get('database');
+    console.log(
+      'databaseConfig = ' +
+        databaseConfig['host'] +
+        ':' +
+        databaseConfig['port'],
     );
-    console.log('databaseHost: ' + databaseHost);
+    console.log(this.configService.get('database.host', 'localhost'));
   }
   findAll(paginationQuery: PaginationDto) {
     const { limit, offset } = paginationQuery;
