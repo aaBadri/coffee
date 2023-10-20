@@ -11,12 +11,16 @@ import {
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
-import { ApiForbiddenResponse } from '@nestjs/swagger';
+import { ApiForbiddenResponse, ApiTags } from '@nestjs/swagger';
 
+// swagger tags
+@ApiTags('coffees')
 @Controller('coffees')
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
+  // swagger group with tags in the method level
+  // @ApiTags('find')
   // @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiForbiddenResponse({ description: 'Forbidden.' })
   @Get()
