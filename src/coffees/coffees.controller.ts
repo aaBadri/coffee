@@ -7,18 +7,24 @@ import {
   Patch,
   Post,
   Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { ApiForbiddenResponse, ApiTags } from '@nestjs/swagger';
 
+// across all endpoints
+@UsePipes(ValidationPipe)
 // swagger tags
 @ApiTags('coffees')
 @Controller('coffees')
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
+  // across this endpoint
+  @UsePipes(ValidationPipe)
   // swagger group with tags in the method level
   // @ApiTags('find')
   // @ApiResponse({ status: 403, description: 'Forbidden.' })
