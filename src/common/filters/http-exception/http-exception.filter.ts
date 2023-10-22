@@ -20,11 +20,11 @@ export class HttpExceptionFilter<T extends HttpException>
       typeof response === 'string'
         ? { message: exceptionResponse }
         : (exceptionResponse as object);
-    console.log(status);
-    console.log({
-      ...error,
-      timestamp: new Date().toISOString(),
-    });
+    // console.log(status);
+    // console.log({
+    //   ...error,
+    //   timestamp: new Date().toISOString(),
+    // });
     response.status(status).json({
       ...error,
       timestamp: new Date().toISOString(),

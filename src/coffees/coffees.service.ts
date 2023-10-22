@@ -19,8 +19,8 @@ export class CoffeesService {
     @Inject(coffeesConfig.KEY)
     private readonly cofffeesConfiguarion: ConfigType<typeof coffeesConfig>,
   ) {
-    console.log(this.cofffeesConfiguarion);
-    console.log(this.cofffeesConfiguarion.foo);
+    // console.log(this.cofffeesConfiguarion);
+    // console.log(this.cofffeesConfiguarion.foo);
   }
   findAll(paginationQuery: PaginationDto) {
     const { limit, offset } = paginationQuery;
