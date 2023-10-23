@@ -27,7 +27,8 @@ export class CoffeesController {
   // @ApiResponse({ status: 403, description: 'Forbidden.' })
   @Public()
   @Get()
-  findAll(@Query() paginationQuery) {
+  async findAll(@Query() paginationQuery) {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     return this.coffeesService.findAll(paginationQuery);
   }
 
