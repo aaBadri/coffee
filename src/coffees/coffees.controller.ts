@@ -14,6 +14,7 @@ import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { ApiForbiddenResponse, ApiTags } from '@nestjs/swagger';
 import { isUUID } from 'class-validator';
+import { Public } from 'src/common/decorators/public.decorator';
 
 // swagger tags
 @ApiTags('coffees')
@@ -24,12 +25,13 @@ export class CoffeesController {
   // swagger group with tags in the method level
   // @ApiTags('find')
   // @ApiResponse({ status: 403, description: 'Forbidden.' })
-  @ApiForbiddenResponse({ description: 'Forbidden.' })
+  @Public()
   @Get()
   findAll(@Query() paginationQuery) {
     return this.coffeesService.findAll(paginationQuery);
   }
 
+  @ApiForbiddenResponse({ description: 'Forbidden.' })
   @Get(':id')
   findOne(@Param('id') id: string) {
     if (id && !isUUID(id))
