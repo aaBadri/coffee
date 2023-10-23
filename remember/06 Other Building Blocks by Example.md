@@ -40,3 +40,41 @@ the rxjs tap() operator doesn't otherwise interfere with the response cycle at a
 there's a potential to do so many other things here:Like passing down version numbers, analytics tracking, etc etc..
 
 interceptors give us an incredible power to manipulate Requests OR Responses, without changing *any* underlying code.
+
+
+# 58
+
+Pipes have 2 typical use-cases.
+1) "Transformation" where we transform *input* data to the desired *output*,
+2) And "validation", where we *evaluate* input data and if -valid-, simply pass it through unchanged. If the data is -not valid-, we want to throw an Exception.
+In both cases. Pipes operate on the arguments being processed by a Controller's route handler.
+NestJS triggers a Pipe just *before* a method is invoked.
+Pipes also receive the arguments meant to be passed onto the method.
+Any transformation or validation operation takes place at -this- time.
+Afterwards the route handler is invoked with any potentially transformed arguments.
+
+
+For example ValidationPipe, which we've seen in
+previous lessons, and ParseArrayPipe, which we
+
+13
+00:00:57,680 --> 00:01:03,740
+haven't seen but it's an extremely helpful Pipe
+that helps us parse and validate Arrays.
+
+
+nest g pipe common/pipes/validate-uuid
+
+This transform() method has 2 parameters.
+`value`: the input value of the currently processed argument before it is received by our route handling method. 
+And `metadata`. The metadata of the currently processed argument. Whatever value is returned from this transform
+function completely overrides the previous value of the argument.
+So when is this useful.
+
+Consider that sometimes the data passed from the client needs to undergo some change, before this data can be properly handled by the route handler method.
+Another example use case for pipes would be to provide default values.
+
+Transformer pipes can perform these functions by interposing the transformation function we create between the client request and the request handler.
+
+# 59
+

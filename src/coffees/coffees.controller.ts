@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
@@ -13,8 +12,8 @@ import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { ApiForbiddenResponse, ApiTags } from '@nestjs/swagger';
-import { isUUID } from 'class-validator';
 import { Public } from 'src/common/decorators/public.decorator';
+import { ValidateUuidPipe } from 'src/common/pipes/validate-uuid/validate-uuid.pipe';
 
 // swagger tags
 @ApiTags('coffees')
@@ -34,10 +33,7 @@ export class CoffeesController {
 
   @ApiForbiddenResponse({ description: 'Forbidden.' })
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    if (id && !isUUID(id))
-      throw new NotFoundException(`Coffee ${id} not found`);
-
+  findOne(@Param('id', ValidateUuidPipe) id: string) {
     // transform: true in main.ts file converts this line from string to number if we set type of id argument to number
     // console.log(typeof id);
     return this.coffeesService.findOne('' + id);
