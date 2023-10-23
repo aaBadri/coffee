@@ -6,8 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
 import appConfig from './config/app.config';
-import { ApiKeyGuard } from './common/guards/api-key/api-key.guard';
-import { APP_GUARD } from '@nestjs/core';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -37,14 +36,9 @@ import { APP_GUARD } from '@nestjs/core';
       // ignoreEnvFile: true,
     }),
     CoffeesModule,
+    CommonModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_GUARD,
-      useClass: ApiKeyGuard,
-    },
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

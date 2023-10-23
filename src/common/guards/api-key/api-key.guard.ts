@@ -4,16 +4,17 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
+import { ConfigService, ConfigType } from '@nestjs/config';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
-import appConfig from 'src/config/app.config';
+// import appConfig from 'src/config/app.config';
 
 @Injectable()
 export class ApiKeyGuard implements CanActivate {
   constructor(
-    @Inject(appConfig.KEY)
-    private readonly appConfiguration: ConfigType<typeof appConfig>,
+    // @Inject(appConfig.KEY)
+    // private readonly appConfiguration: ConfigType<typeof appConfig>,
+    private readonly configService: ConfigService,
   ) {
     // console.log(this.appConfiguration.apiKey);
   }
@@ -23,7 +24,7 @@ export class ApiKeyGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
     const authHeader = request.header('Authorization');
-    console.log(authHeader);
-    return authHeader == this.appConfiguration.apiKey;
+    // return authHeader == this.appConfiguration.apiKey;
+    return authHeader == this.configService.get('API_KEY');
   }
 }
