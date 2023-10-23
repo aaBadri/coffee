@@ -78,3 +78,22 @@ Transformer pipes can perform these functions by interposing the transformation 
 
 # 59
 
+Middleware is a function that is called *before* the route handler and any other building blocks are processed. This includes Interceptors, Guards and Pipes.
+
+Middleware functions have access to the Request &amp; Response objects, and are *not* specifically tied to *any method*, but rather to a specified "route path".
+
+Middleware functions can perform the following tasks:
+1) Executing code.
+2) Making changes to the request and response objects.
+3) Ending the request/response cycle.
+4) Or even calling the `next()` middleware function in the call stack.
+
+When working with middleware, if the current middleware function does not end the request/response cycle.
+It *must* call the `next()` method, which passes control to the next middleware function.
+Otherwise the request will be left -hanging-, and never complete.
+
+Custom Nest middleware can be implemented in either a Function or a Class.
+Function Middleware is "stateless", it can *not* inject dependencies, and doesn't have access to the Nest container.
+On the other hand. Class Middleware can rely on external dependencies and inject providers registered in the same module scope.
+
+For a more realistic use case you could potentially utilize something like what we just created, to log "long lasting methods" to a database, and keep track of how long every API takes to complete.
