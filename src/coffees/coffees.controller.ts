@@ -14,6 +14,7 @@ import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { ApiForbiddenResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/common/decorators/public.decorator';
 import { ValidateUuidPipe } from 'src/common/pipes/validate-uuid/validate-uuid.pipe';
+import { Protocol } from 'src/common/decorators/protocol.decorator';
 
 // swagger tags
 @ApiTags('coffees')
@@ -26,8 +27,9 @@ export class CoffeesController {
   // @ApiResponse({ status: 403, description: 'Forbidden.' })
   @Public()
   @Get()
-  async findAll(@Query() paginationQuery) {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+  findAll(@Protocol('some-input') protocol, @Query() paginationQuery) {
+    console.log({ protocol });
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
     return this.coffeesService.findAll(paginationQuery);
   }
 

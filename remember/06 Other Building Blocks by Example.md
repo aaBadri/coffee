@@ -97,3 +97,11 @@ Function Middleware is "stateless", it can *not* inject dependencies, and doesn'
 On the other hand. Class Middleware can rely on external dependencies and inject providers registered in the same module scope.
 
 For a more realistic use case you could potentially utilize something like what we just created, to log "long lasting methods" to a database, and keep track of how long every API takes to complete.
+
+
+# 60
+
+Let's imagine that for some reason we want to retrieve the `request.protocol` from within the route handler. 
+Normally we would need to inject the entire Request object with the `@Req()` decorator into the method definition.
+However this makes this particular method harder to test since we would need to mock the entire Request object every time we try to test this method.
+In order to make our code more readable and easier to test Let's create a custom param decorator instead.
