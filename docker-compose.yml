@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_PASSWORD: pass123
   test-db:
-    container_name: 'TESTCoffeeDB'
+    container_name: 'TestCoffeeDB'
     image: postgres
     restart: always
     ports:
