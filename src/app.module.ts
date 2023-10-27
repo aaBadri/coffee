@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
 import appConfig from './config/app.config';
 import { CommonModule } from './common/common.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { CommonModule } from './common/common.module';
     }),
     CoffeesModule,
     CommonModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
