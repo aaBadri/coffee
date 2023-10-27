@@ -8,6 +8,7 @@ import * as Joi from '@hapi/joi';
 import appConfig from './config/app.config';
 import { CommonModule } from './common/common.module';
 import { UsersModule } from './users/users.module';
+import { IamModule } from './iam/iam.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { UsersModule } from './users/users.module';
     CoffeesModule,
     CommonModule,
     UsersModule,
+    IamModule,
   ],
   controllers: [AppController],
   providers: [AppService],
