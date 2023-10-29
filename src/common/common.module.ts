@@ -21,10 +21,10 @@ import { LoggingMiddleware } from './middleware/logging/logging.middleware';
     }),
   ],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: ApiKeyGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: ApiKeyGuard,
+    // },
   ],
 })
 export class CommonModule implements NestModule {
