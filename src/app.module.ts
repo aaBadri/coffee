@@ -23,7 +23,7 @@ import { IamModule } from './iam/iam.module';
         database: process.env.DATABASE_NAME,
         autoLoadEntities: true,
         // turn off in production
-        // synchronize: true,
+        synchronize: true,
       }),
     }),
     ConfigModule.forRoot({
