@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -10,6 +11,9 @@ import { HashingService } from '../hashing/hashing.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { PostgresErrorCode } from 'src/db/errors.constraint';
+import jwtConfig from '../config/jwt.config';
+import { ConfigType } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthenticationService {
@@ -17,6 +21,9 @@ export class AuthenticationService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly hashingService: HashingService,
+    private readonly jwtService: JwtService,
+    @Inject(jwtConfig.KEY)
+    private readonly jwtConfiguarion: ConfigType<typeof jwtConfig>,
   ) {}
 
   async singUp(signUpDto: SignUpDto) {
@@ -49,7 +56,20 @@ export class AuthenticationService {
     if (!isEqual) {
       throw new UnauthorizedException('user or password is wrong');
     }
-    // todo: it will be completted!
-    return true;
+    const accessToken = await this.jwtService.signAsync(
+      {
+        sub: user.id,
+        email: user.email,
+      },
+      {
+        audience: this.jwtConfiguarion.audience,
+        issuer: this.jwtConfiguarion.issuer,
+        secret: this.jwtConfiguarion.secret,
+        expiresIn: this.jwtConfiguarion.accessTokenTtl,
+      },
+    );
+    return {
+      accessToken,
+    };
   }
 }

@@ -19,7 +19,7 @@ async function bootstrap() {
   );
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(
-    new WrapResponseInterceptor(),
+    // new WrapResponseInterceptor(),
     new TimeoutInterceptor(),
   );
   const options = new DocumentBuilder()
