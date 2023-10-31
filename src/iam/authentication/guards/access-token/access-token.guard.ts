@@ -9,6 +9,7 @@ import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import jwtConfig from 'src/iam/config/jwt.config';
+import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
 
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
@@ -18,7 +19,7 @@ export class AccessTokenGuard implements CanActivate {
     private readonly jwtConfiguarion: ConfigType<typeof jwtConfig>,
   ) {}
   private extractTokenFromHeader(request: Request): string | undefined {
-    const [_, token] = request.headers.authorization?.split(' ') ?? [];
+    const [, token] = request.headers.authorization?.split(' ') ?? [];
     return token;
   }
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -32,6 +33,7 @@ export class AccessTokenGuard implements CanActivate {
         token,
         this.jwtConfiguarion,
       );
+      request[REQUEST_USER_KEY] = payload;
     } catch {
       throw new UnauthorizedException();
     }
