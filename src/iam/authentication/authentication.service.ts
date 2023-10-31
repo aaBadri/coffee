@@ -14,6 +14,7 @@ import { PostgresErrorCode } from 'src/db/errors.constraint';
 import jwtConfig from '../config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { ActiveUserData } from '../interfaces/active-user.interface';
 
 @Injectable()
 export class AuthenticationService {
@@ -60,7 +61,7 @@ export class AuthenticationService {
       {
         sub: user.id,
         email: user.email,
-      },
+      } as ActiveUserData,
       {
         audience: this.jwtConfiguarion.audience,
         issuer: this.jwtConfiguarion.issuer,

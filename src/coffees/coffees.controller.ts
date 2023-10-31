@@ -16,6 +16,7 @@ import { Public } from 'src/common/decorators/public.decorator';
 import { ValidateUuidPipe } from 'src/common/pipes/validate-uuid/validate-uuid.pipe';
 import { Protocol } from 'src/common/decorators/protocol.decorator';
 import { ActiveUser } from 'src/iam/decorators/active-user.decorator';
+import { ActiveUserData } from 'src/iam/interfaces/active-user.interface';
 
 // swagger tags
 @ApiTags('coffees')
@@ -37,7 +38,10 @@ export class CoffeesController {
 
   @ApiForbiddenResponse({ description: 'Forbidden.' })
   @Get(':id')
-  findOne(@ActiveUser() user, @Param('id', ValidateUuidPipe) id: string) {
+  findOne(
+    @ActiveUser() user: ActiveUserData,
+    @Param('id', ValidateUuidPipe) id: string,
+  ) {
     // transform: true in main.ts file converts this line from string to number if we set type of id argument to number
     // console.log(typeof id);
     console.log(user);
