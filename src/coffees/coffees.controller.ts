@@ -15,6 +15,7 @@ import { ApiForbiddenResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/common/decorators/public.decorator';
 import { ValidateUuidPipe } from 'src/common/pipes/validate-uuid/validate-uuid.pipe';
 import { Protocol } from 'src/common/decorators/protocol.decorator';
+import { ActiveUser } from 'src/iam/decorators/active-user.decorator';
 
 // swagger tags
 @ApiTags('coffees')
@@ -29,15 +30,17 @@ export class CoffeesController {
   @Get()
   findAll(@Protocol('some-input') protocol, @Query() paginationQuery) {
     console.log({ protocol });
+
     // await new Promise((resolve) => setTimeout(resolve, 2000));
     return this.coffeesService.findAll(paginationQuery);
   }
 
   @ApiForbiddenResponse({ description: 'Forbidden.' })
   @Get(':id')
-  findOne(@Param('id', ValidateUuidPipe) id: string) {
+  findOne(@ActiveUser() user, @Param('id', ValidateUuidPipe) id: string) {
     // transform: true in main.ts file converts this line from string to number if we set type of id argument to number
     // console.log(typeof id);
+    console.log(user);
     return this.coffeesService.findOne('' + id);
   }
 
