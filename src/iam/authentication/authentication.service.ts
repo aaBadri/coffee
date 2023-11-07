@@ -57,20 +57,32 @@ export class AuthenticationService {
     if (!isEqual) {
       throw new UnauthorizedException('user or password is wrong');
     }
-    const accessToken = await this.jwtService.signAsync(
+    const [accessToken, refreshToken] = await Promise.all([
+      this.signToken<Partial<ActiveUserData>>(
+        user.id,
+        this.jwtConfiguarion.accessTokenTtl,
+        { email: user.email },
+      ),
+      this.signToken(user.id, this.jwtConfiguarion.refreshTokenTtl),
+    ]);
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  private async signToken<T>(userId: string, expiresIn: number, payload?: T) {
+    return await this.jwtService.signAsync(
       {
-        sub: user.id,
-        email: user.email,
-      } as ActiveUserData,
+        sub: userId,
+        ...payload,
+      },
       {
         audience: this.jwtConfiguarion.audience,
         issuer: this.jwtConfiguarion.issuer,
         secret: this.jwtConfiguarion.secret,
-        expiresIn: this.jwtConfiguarion.accessTokenTtl,
+        expiresIn,
       },
     );
-    return {
-      accessToken,
-    };
   }
 }
