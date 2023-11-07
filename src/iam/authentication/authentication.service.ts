@@ -15,6 +15,7 @@ import jwtConfig from '../config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { ActiveUserData } from '../interfaces/active-user.interface';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
 
 @Injectable()
 export class AuthenticationService {
@@ -57,6 +58,27 @@ export class AuthenticationService {
     if (!isEqual) {
       throw new UnauthorizedException('user or password is wrong');
     }
+    return await this.generateTokens(user);
+  }
+  async refreshToken(refreshTokenDto: RefreshTokenDto) {
+    try {
+      const { sub } = await this.jwtService.verifyAsync<
+        Pick<ActiveUserData, 'sub'>
+      >(refreshTokenDto.refreshToken, {
+        secret: this.jwtConfiguarion.secret,
+        audience: this.jwtConfiguarion.audience,
+        issuer: this.jwtConfiguarion.issuer,
+      });
+      const user = await this.userRepository.findOneByOrFail({
+        id: sub,
+      });
+      return this.generateTokens(user);
+    } catch (err) {
+      throw new UnauthorizedException();
+    }
+  }
+
+  private async generateTokens(user: User) {
     const [accessToken, refreshToken] = await Promise.all([
       this.signToken<Partial<ActiveUserData>>(
         user.id,
