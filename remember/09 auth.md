@@ -10,3 +10,6 @@ nest g resource iam
 
 # 6
 npm i @nestjs/jwt
+
+# 11
+npm i ioredis
