@@ -17,6 +17,8 @@ import { ValidateUuidPipe } from 'src/common/pipes/validate-uuid/validate-uuid.p
 import { Protocol } from 'src/common/decorators/protocol.decorator';
 import { ActiveUser } from 'src/iam/decorators/active-user.decorator';
 import { ActiveUserData } from 'src/iam/interfaces/active-user.interface';
+import { Roles } from 'src/iam/authorization/decorators/roles.decorator';
+import { Role } from 'src/users/enum/role.enum';
 
 // swagger tags
 @ApiTags('coffees')
@@ -48,6 +50,7 @@ export class CoffeesController {
     return this.coffeesService.findOne('' + id);
   }
 
+  @Roles(Role.Admin)
   @Post()
   create(@Body() createCoffeeDto: CreateCoffeeDto) {
     // transform: true in main.ts file makes this line true
@@ -60,6 +63,7 @@ export class CoffeesController {
     return this.coffeesService.update(id, updateCoffeeDto);
   }
 
+  @Roles(Role.Admin)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.coffeesService.remove(id);
