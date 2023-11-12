@@ -19,6 +19,8 @@ import { ActiveUser } from 'src/iam/decorators/active-user.decorator';
 import { ActiveUserData } from 'src/iam/interfaces/active-user.interface';
 import { Roles } from 'src/iam/authorization/decorators/roles.decorator';
 import { Role } from 'src/users/enum/role.enum';
+import { Policies } from 'src/iam/authorization/decorators/policies.decorator';
+import { CheckEmailPolicy } from 'src/iam/authorization/policies/check-email.policy';
 
 // swagger tags
 @ApiTags('coffees')
@@ -38,6 +40,9 @@ export class CoffeesController {
     return this.coffeesService.findAll(paginationQuery);
   }
 
+  @Policies(
+    new CheckEmailPolicy() /** new MinAgePolicy(18), new OnlyAdminPolicy() */,
+  )
   @ApiForbiddenResponse({ description: 'Forbidden.' })
   @Get(':id')
   findOne(

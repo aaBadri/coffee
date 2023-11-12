@@ -12,7 +12,10 @@ import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './authentication/guards/access-token/access-token.guard';
 import { AuthenticationGuard } from './authentication/guards/authentication/authentication.guard';
 import { RefreshTokenIdsStorage } from './authentication/refresh-token-ids.storage/refresh-token-ids.storage';
-import { RolesGuard } from './authorization/guards/roles.guard';
+// import { RolesGuard } from './authorization/guards/roles.guard';
+import { PolicyHandlerStorage } from './authorization/policies/policy-handlers.storage';
+import { CheckEmailPolicyHandler } from './authorization/policies/check-email.policy';
+import { PoliciesGuard } from './authorization/guards/policies.guard';
 
 @Module({
   imports: [
@@ -23,10 +26,13 @@ import { RolesGuard } from './authorization/guards/roles.guard';
   providers: [
     { provide: HashingService, useClass: BcryptService },
     { provide: APP_GUARD, useClass: AuthenticationGuard },
-    { provide: APP_GUARD, useClass: RolesGuard },
+    // { provide: APP_GUARD, useClass: RolesGuard },
+    { provide: APP_GUARD, useClass: PoliciesGuard },
     AuthenticationService,
     AccessTokenGuard,
     RefreshTokenIdsStorage,
+    PolicyHandlerStorage,
+    CheckEmailPolicyHandler,
   ],
   controllers: [AuthenticationController],
 })
